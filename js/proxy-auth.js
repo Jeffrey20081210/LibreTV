@@ -92,6 +92,7 @@ function validateProxyAuth(authHash, serverPasswordHash, timestamp) {
     }
     
     // 验证时间戳（10分钟有效期）
+    /*
     const now = Date.now();
     const maxAge = 10 * 60 * 1000; // 10分钟
     
@@ -99,7 +100,7 @@ function validateProxyAuth(authHash, serverPasswordHash, timestamp) {
         console.warn('代理请求时间戳过期');
         return false;
     }
-    
+    */
     return true;
 }
 
