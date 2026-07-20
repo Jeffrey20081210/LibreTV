@@ -31,7 +31,7 @@ const CUSTOMER_SITES = {
         api: 'http://tangrenjie.tv/api.php/provide/vod',
         name: '唐人街',
     },
-    cool_point: {
+    cool_point_1: {
         api: 'http://api.kuapi.cc/api.php/provide/vod',
         name: '酷点资源1',
     },
@@ -39,7 +39,7 @@ const CUSTOMER_SITES = {
         api: 'http://collect.wolongzyw.com/api.php/provide/vod',
         name: '卧龙资源',
     },
-    cool_point: {
+    cool_point_2: {
         api: 'http://kudian10.com/api.php/provide/vod',
         name: '酷点资源2',
     },
