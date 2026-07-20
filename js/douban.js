@@ -528,8 +528,8 @@ function renderDoubanCards(data, container) {
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;');
             
-            // 处理图片URL：符合 Cloudflare [[path]] 路由的直接拼接格式
-            const proxiedCoverUrl = `/proxy/${encodeURIComponent(item.cover)}`;
+            // 处理图片URL：使用開源公共防盜鏈代理服務，彻底避開 Cloudflare 後端 Bug 舆豆瓣封鎖
+            const proxiedCoverUrl = `https://weserv.nl{encodeURIComponent(item.cover)}`;
             
             // 为不同设备优化卡片布局
             card.innerHTML = `
