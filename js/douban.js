@@ -528,11 +528,9 @@ function renderDoubanCards(data, container) {
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;');
             
-            // 处理图片URL：使用開源公共防盜鏈代理服務，彻底避開 Cloudflare 後端 Bug 舆豆瓣封鎖
-            const domain = String.fromCharCode(104,116,116,112,115,58,47,47,105,109,97,103,101,115,46,119,101,115,101,114,118,46,110,108,47,63,117,114,108,61);
-            const proxiedCoverUrl = domain + encodeURIComponent(item.cover);
+            // 处理图片URL：符合 Cloudflare [[path]] 路由的直接拼接格式
+            const proxiedCoverUrl = `/proxy/${encodeURIComponent(item.cover)}`;
 
-            
             // 为不同设备优化卡片布局
             card.innerHTML = `
                 <div class="relative w-full aspect-[2/3] overflow-hidden cursor-pointer" onclick="fillAndSearchWithDouban('${safeTitle}')">
