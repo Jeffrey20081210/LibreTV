@@ -139,11 +139,13 @@ export async function onRequest(context) {
         }
     }
 
-    // 从请求路径中提取目标 URL
+    // 从请求路径中提取目标 URL (优化适配 Cloudflare Pages 动态路由)
     function getTargetUrlFromPath(pathname) {
-        // 路径格式: /proxy/经过编码的URL
-        // 例如: /proxy/https%3A%2F%2Fexample.com%2Fplaylist.m3u8
-        const encodedUrl = pathname.replace(/^\/proxy\//, '');
+        // 同时兼顾清理 /proxy/、/proxy 以及开头的单个斜线 /
+        let encodedUrl = pathname.replace(/^\/proxy\//, '').replace(/^\/proxy/, '');
+        if (encodedUrl.startsWith('/')) {
+            encodedUrl = encodedUrl.substring(1); // 完美扒掉开头的多余斜线
+        }
         if (!encodedUrl) return null;
         try {
             // 解码
