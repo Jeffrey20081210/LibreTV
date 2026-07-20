@@ -28,7 +28,8 @@ export async function onRequest(context) {
     const { request, env, next, waitUntil } = context; // next 和 waitUntil 可能需要
     const url = new URL(request.url);
 
-    // 验证鉴权（主函数调用）
+    // 【已註解】直接關閉後端代理的二次鑑權，防止首頁海報破圖
+    /*
     const isValidAuth = await validateAuth(request, env);
     if (!isValidAuth) {
         return new Response(JSON.stringify({
@@ -44,6 +45,7 @@ export async function onRequest(context) {
             }
         });
     }
+    */
 
     // --- 从环境变量读取配置 ---
     const DEBUG_ENABLED = (env.DEBUG === 'true');
