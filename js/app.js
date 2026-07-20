@@ -31,9 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
         selectedAPIs = ["tyyszy", "bfzy", "dyttzy", "ruyi"];
         localStorage.setItem('selectedAPIs', JSON.stringify(selectedAPIs));
 
-        // 默认选中过滤开关
-        localStorage.setItem('yellowFilterEnabled', 'true');
-        localStorage.setItem(PLAYER_CONFIG.adFilteringStorage, 'true');
+        // 默认关闭过滤开关
+        localStorage.setItem('yellowFilterEnabled', 'false');
+        localStorage.setItem(PLAYER_CONFIG.adFilteringStorage, 'false');
 
         // 默认启用豆瓣功能
         localStorage.setItem('doubanEnabled', 'true');
