@@ -1,5 +1,5 @@
 // 全局变量
-let selectedAPIs = JSON.parse(localStorage.getItem('selectedAPIs') || '["red_bull", "quantum", "open_cinema", "high_quality_resource", "three_nine", "paradise", "le_huo", "chinatown", "one_cool_point", "wolong", "two_cool_point"]'); // 默认选中资源
+let selectedAPIs = JSON.parse(localStorage.getItem('selectedAPIs') || '["red_bull", "quantum", "open_cinema", "high_quality_resource", "three_nine", "paradise", "le_huo", "chinatown", "cool_point_1", "wolong", "cool_point_2"]'); // 默认选中资源
 let customAPIs = JSON.parse(localStorage.getItem('customAPIs') || '[]'); // 存储自定义API列表
 
 // 添加当前播放的集数索引
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 设置默认API选择（如果是第一次加载）
     if (!localStorage.getItem('hasInitializedDefaults')) {
         // 默认选中资源
-        selectedAPIs = ["red_bull", "quantum", "open_cinema", "high_quality_resource", "three_nine", "paradise", "le_huo", "chinatown", "one_cool_point", "wolong", "two_cool_point"];
+        selectedAPIs = ["red_bull", "quantum", "open_cinema", "high_quality_resource", "three_nine", "paradise", "le_huo", "chinatown", "cool_point_1", "wolong", "cool_point_2"];
         localStorage.setItem('selectedAPIs', JSON.stringify(selectedAPIs));
 
         // 默认关闭过滤开关
