@@ -119,6 +119,7 @@ export async function onRequest(context) {
     }
 
     // 验证鉴权（主函数调用）
+    /*
     if (!validateAuth(request, env)) {
         return new Response('Unauthorized', { 
             status: 401,
@@ -129,6 +130,7 @@ export async function onRequest(context) {
             }
         });
     }
+    */
 
     // 输出调试日志 (需要设置 DEBUG: true 环境变量)
     function logDebug(message) {
