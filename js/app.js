@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 默认关闭过滤开关
         localStorage.setItem('yellowFilterEnabled', 'false');
-        localStorage.setItem(PLAYER_CONFIG.adFilteringStorage, 'false');
+        localStorage.setItem(PLAYER_CONFIG.adFilteringStorage, 'true');
 
         // 默认启用豆瓣功能
         localStorage.setItem('doubanEnabled', 'true');
