@@ -139,36 +139,46 @@ export async function onRequest(context) {
         }
     }
 
-    // 从请求路径中提取目标 URL (优化适配 Cloudflare Pages 动态路由)
+    // 从请求路径中提取目标 URL (終極修復：自動還原被 Cloudflare 壓縮的單斜線)
     function getTargetUrlFromPath(pathname) {
-        // 同时兼顾清理 /proxy/、/proxy 以及开头的单个斜线 /
-        let encodedUrl = pathname.replace(/^\/proxy\//, '').replace(/^\/proxy/, '');
-        if (encodedUrl.startsWith('/')) {
-            encodedUrl = encodedUrl.substring(1); // 完美扒掉开头的多余斜线
+        // 1. 拿掉任何可能殘留的代理前綴
+        let rawPath = pathname.replace(/^\/proxy\//, '').replace(/^\/proxy/, '');
+        if (rawPath.startsWith('/')) {
+            rawPath = rawPath.substring(1);
         }
-        if (!encodedUrl) return null;
-        try {
-            // 解码
-            let decodedUrl = decodeURIComponent(encodedUrl);
+        if (!rawPath) return null;
 
-             // 简单检查解码后是否是有效的 http/https URL
-             if (!decodedUrl.match(/^https?:\/\//i)) {
-                 // 也许原始路径就没有编码？如果看起来像URL就直接用
-                 if (encodedUrl.match(/^https?:\/\//i)) {
-                     decodedUrl = encodedUrl;
-                     logDebug(`Warning: Path was not encoded but looks like URL: ${decodedUrl}`);
-                 } else {
+        try {
+            // 2. 解碼網址
+            let decodedUrl = decodeURIComponent(rawPath);
+
+            // 3. 關鍵修正：如果網址被 Cloudflare 壓縮成了 http:/ 或 https:/（只有單斜線）
+            // 強制將其修復還原回標準的 http:// 或 https:// 雙斜線格式
+            if (decodedUrl.match(/^https?:\/[^\/]/i)) {
+                decodedUrl = decodedUrl.replace(/^(https?:\/)/i, '$1/');
+            }
+
+            // 4. 終極兜底檢查：如果解碼後依舊不包含 http 協議，但解碼前包含，直接用解碼前的
+            if (!decodedUrl.match(/^https?:\/\//i)) {
+                if (rawPath.match(/^https?:\/\//i)) {
+                    decodedUrl = rawPath;
+                } else if (rawPath.match(/^https?:\/[^\/]/i)) {
+                    decodedUrl = rawPath.replace(/^(https?:\/)/i, '$1/');
+                } else {
                     logDebug(`无效的目标URL格式 (解码后): ${decodedUrl}`);
                     return null;
-                 }
-             }
-             return decodedUrl;
+                }
+            }
+            
+            logDebug(`成功解析目標URL: ${decodedUrl}`);
+            return decodedUrl;
 
         } catch (e) {
-            logDebug(`解码目标URL时出错: ${encodedUrl} - ${e.message}`);
+            logDebug(`解码目标URL时出错: ${rawPath} - ${e.message}`);
             return null;
         }
     }
+
 
     // 创建标准化的响应
     function createResponse(body, status = 200, headers = {}) {
